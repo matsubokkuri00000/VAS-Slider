@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VASスライダー</title>
+
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 20px;
+        line-height: 1.8;
+        text-align: center;
+    }
+
+    h1{
+        margin-bottom: 10px;
+    }
+
+    #questionNumber{
+        font-size: 24px;
+        font-weight: bold;
+        margin: 40px 0 20px;
+    }
+
+    input[type="range"]{
+        width:100%;
+        margin-top:20px;
+    }
+
+    .labels{
+        display:flex;
+        justify-content:space-between;
+        margin-top:5px;
+        font-size:15px;
+    }
+
+    button{
+        margin-top:40px;
+        padding:12px 30px;
+        font-size:18px;
+        cursor:pointer;
+    }
+
+    #message{
+        margin-top:20px;
+        font-weight:bold;
+        color:green;
+        height:25px;
+    }
+</style>
+
+</head>
+<body>
+
+<h1>VAS評価</h1>
+
+<p>
+システム体験中にどう感じましたか．
+</p>
+
+<p>
+直観的に以下の質問に当てはまる度合いを0～99で回答してください．
+</p>
+
+<p>
+0：全く当てはまらない　　99：強く当てはまる
+</p>
+
+
+<input
+    type="range"
+    id="slider"
+    min="0"
+    max="99"
+    value="50">
+
+<div class="labels">
+    <span>0<br>全く当てはまらない</span>
+    <span>99<br>強く当てはまる</span>
+</div>
+
+<div id="message"></div>
+
+<script>
+
+let question = 1;
+
+async function copyValue(){
+
+    const value = document.getElementById("slider").value;
+
+    try{
+
+        await navigator.clipboard.writeText(value);
+
+        document.getElementById("message").innerHTML =
+        "✅ 「" + value + "」をコピーしました";
+
+        question++;
+
+        document.getElementById("questionNumber").innerHTML =
+        "質問 " + question;
+
+        document.getElementById("slider").value = 50;
+
+    }
+    catch{
+
+        alert("コピーに失敗しました。");
+    }
+
+}
+
+</script>
+
+<script src="./slider.js"></script>
+</body>
+</html>
